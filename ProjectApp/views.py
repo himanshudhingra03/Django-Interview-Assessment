@@ -10,18 +10,10 @@ from rest_framework.response import Response
 from . serializer import UserRegistrationSerializer, UserLoginSerializer, UserListSerializer
 # Create your views here.
 class UserRegistrationView(CreateAPIView):
-    """
-    Create a user with the given credentials and assign role of Librarian or Member based on value of is_librarian or is_member.
-    """
+
     queryset = Employee.objects.all()
     serializer_class = UserRegistrationSerializer
     permission_classes = (AllowAny, )
-
-
-# class AuthUserLoginView(ListAPIView):
-#     serializer_class = UserLoginSerializer
-#     permission_classes = (AllowAny, )
-
 
 class AuthUserLoginView(APIView):
     serializer_class = UserLoginSerializer
@@ -41,7 +33,8 @@ class AuthUserLoginView(APIView):
                 'access': serializer.data['access'],
                 'refresh': serializer.data['refresh'],
                 'authenticatedUser': {
-                    'email': serializer.data['email']
+                    'email': serializer.data['email'],
+                    'username':serializer.data['username']
                     # 'role': serializer.data['role']
                 }
             }
@@ -52,6 +45,11 @@ class UserListView(ListAPIView):
     queryset = Employee.objects.all()
     serializer_class = UserListSerializer
     permission_classes = (IsAuthenticated,)
+
+# class ProjectListView(ListAPIView):
+
+
+
 
 
     
